@@ -6,6 +6,8 @@
 	<string>This app needs access to location when open to provide the weather based on your location.</string>
 	<!-- <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app needs to location when open and in the background</string> -->
+	<key>com.apple.security.network.client</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
