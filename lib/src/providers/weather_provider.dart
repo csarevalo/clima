@@ -30,7 +30,6 @@ class WeatherProvider extends ChangeNotifier {
   Future<void> getWeatherData() async {
     Position? position = await _location.getPosition();
 
-    position = null; //FIXME: remove
     if (position == null) {
       _weatherData = weatherDataError(
         'Unable to access location services denied.',
