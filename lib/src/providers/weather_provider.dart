@@ -20,6 +20,8 @@ class WeatherProvider extends ChangeNotifier {
 
   WeatherData get weatherData => _weatherData;
 
+  final String _units = 'imperial'; // Fahrenheit // 'metric'; // Celsius
+
   /// Must initialize provider to get weather data
   Future<void> init() async {
     await getWeatherData();
@@ -45,7 +47,7 @@ class WeatherProvider extends ChangeNotifier {
 
     NetworkHelper networkHelper = NetworkHelper(
       // '$_openWeatherUrl/3.0/onecall?lat=$lat&lon=$long&exclude=hourly,daily&appid=$_apiKey',
-      '$_openWeatherUrl/2.5/weather?lat=$lat&lon=$long&APPID=$_apiKey',
+      '$_openWeatherUrl/2.5/weather?lat=$lat&lon=$long&units=$_units&APPID=$_apiKey',
     );
 
     var openWeatherData = await networkHelper.getWeatherData();

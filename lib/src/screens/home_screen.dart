@@ -1,6 +1,8 @@
+import 'package:clima/src/providers/weather_provider.dart';
 import 'package:clima/src/widgets/weather_card.dart';
 import 'package:clima/src/widgets/weather_message_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -28,16 +30,18 @@ class HomeScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    final WeatherData weatherData =
+        Provider.of<WeatherProvider>(context).weatherData;
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           WeatherCard(
-            openWeatherIconString: '02n',
-            temperature: 71,
+            openWeatherIconString: weatherData.openWeatherIcon, //'02n',
+            temperature: weatherData.temperature, //71,
           ),
-          WeatherMessageCard(),
+          const WeatherMessageCard(),
         ],
       ),
     );

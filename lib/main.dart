@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 void main() async {
   final WeatherProvider weatherProvider = WeatherProvider();
-  // await weatherProvider.init();
+  await weatherProvider.init();
   runApp(
     ChangeNotifierProvider(
       create: (BuildContext context) => weatherProvider,

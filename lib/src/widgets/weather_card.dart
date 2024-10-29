@@ -1,6 +1,6 @@
 import 'package:clima/src/widgets/temp_card.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class WeatherCard extends StatelessWidget {
   const WeatherCard({
@@ -20,16 +20,9 @@ class WeatherCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            children: [
-              const FaIcon(
-                FontAwesomeIcons.solidSun,
-                size: 70,
-              ),
-              Image.network(
-                'http://openweathermap.org/img/wn/$openWeatherIconString@2x.png',
-              )
-            ],
+          // const FaIcon(FontAwesomeIcons.solidSun, size: 70),
+          Image.network(
+            'http://openweathermap.org/img/wn/$openWeatherIconString@2x.png',
           ),
           TempCard(temperature: temperature),
         ],
