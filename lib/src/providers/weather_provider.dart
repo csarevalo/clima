@@ -7,10 +7,11 @@ import 'package:flutter/material.dart';
 const String _openWeatherUrl = 'https://api.openweathermap.org/data';
 const String _apiKey = 'f6a2b2f36fe1df4ac64e75e29ad0f49e';
 WeatherData _weatherDataError = WeatherData(
-  city: 'N/a',
-  description: 'error: access to location denied',
+  error: true,
+  city: '',
+  description: 'Access to location services denied.',
   temperature: 0,
-  openWeatherIcon: '02n',
+  openWeatherIcon: '11d',
 );
 
 class WeatherProvider extends ChangeNotifier {
@@ -36,6 +37,7 @@ class WeatherProvider extends ChangeNotifier {
   Future<void> getWeatherData() async {
     Position? position = await _location.getPosition();
 
+    position = null; //FIXME: remove
     if (position == null) {
       _weatherData = _weatherDataError;
       return;
@@ -70,10 +72,12 @@ class WeatherData {
     required this.description,
     required this.temperature,
     required this.openWeatherIcon,
+    this.error = false,
   });
 
   final String city;
   final String description;
   final double temperature;
   final String openWeatherIcon;
+  final bool error;
 }

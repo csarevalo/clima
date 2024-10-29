@@ -42,6 +42,7 @@ class HomeScreenContent extends StatelessWidget {
             temperature: weatherData.temperature, //71,
           ),
           WeatherMessageCard(
+            error: weatherData.error,
             city: weatherData.city,
             weatherDescription: weatherData.description,
             textAlign: TextAlign.center,
