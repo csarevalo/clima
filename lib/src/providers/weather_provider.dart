@@ -18,14 +18,17 @@ class WeatherProvider extends ChangeNotifier {
 
   late WeatherData weatherData;
 
+  /// Must initialize provider to get weather data
   Future<void> init() async {
     await getWeatherData();
   }
 
+  /// Use to refresh weather
   Future<void> refreshData() async {
     await getWeatherData();
   }
 
+  /// Get weather data
   Future<void> getWeatherData() async {
     Position? position = await _location.getPosition();
 
@@ -34,8 +37,8 @@ class WeatherProvider extends ChangeNotifier {
       return;
     }
 
-    double lat = position?.latitude ?? 0;
-    double long = position?.longitude ?? 0;
+    double lat = position.latitude;
+    double long = position.longitude;
     debugPrint('lat: $lat, long: $long');
 
     NetworkHelper networkHelper = NetworkHelper(
@@ -56,6 +59,7 @@ class WeatherProvider extends ChangeNotifier {
   }
 }
 
+/// Contains only app essential weather data
 class WeatherData {
   WeatherData({
     required this.city,
