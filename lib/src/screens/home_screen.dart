@@ -15,7 +15,10 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text('Clima'),
+        title: const Text(
+          'Clima Weather',
+          style: TextStyle(fontSize: 36),
+        ),
         centerTitle: true,
       ),
       body: const HomeScreenContent(),
