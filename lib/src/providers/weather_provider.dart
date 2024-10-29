@@ -16,7 +16,9 @@ WeatherData _weatherDataError = WeatherData(
 class WeatherProvider extends ChangeNotifier {
   final Location _location = Location();
 
-  late WeatherData weatherData;
+  late WeatherData _weatherData;
+
+  WeatherData get weatherData => _weatherData;
 
   /// Must initialize provider to get weather data
   Future<void> init() async {
@@ -33,7 +35,7 @@ class WeatherProvider extends ChangeNotifier {
     Position? position = await _location.getPosition();
 
     if (position == null) {
-      weatherData = _weatherDataError;
+      _weatherData = _weatherDataError;
       return;
     }
 
@@ -48,7 +50,7 @@ class WeatherProvider extends ChangeNotifier {
 
     var openWeatherData = await networkHelper.getWeatherData();
 
-    weatherData = WeatherData(
+    _weatherData = WeatherData(
       city: openWeatherData['name'],
       description: openWeatherData['weather'][0]['description'],
       temperature: openWeatherData?['main']['temp'],
