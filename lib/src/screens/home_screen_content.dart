@@ -28,7 +28,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
   }
 
   Future<void> getPosition() async {
-    position = await location.determinePosition();
+    position = await location.getPosition();
   }
 
   Future<void> getWeatherData() async {

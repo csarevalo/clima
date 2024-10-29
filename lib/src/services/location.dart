@@ -5,11 +5,11 @@ class Location {
   late bool serviceEnabled;
   late LocationPermission permission;
 
-  /// Determine the current position of the device.
+  /// Determine and return the current position of the device.
   ///
   /// When the location services are not enabled or permissions
-  /// are denied the `Future` will return an error.
-  Future<Position?> determinePosition() async {
+  /// are denied the `Future<Position?>` will return null.
+  Future<Position?> getPosition() async {
     try {
       // Verify that services are enabled and
       // Verify that access to location
@@ -32,11 +32,8 @@ class Location {
   /// Verifies whether location services are enabled on the device.
   /// Also verifies if the user allows the App to access the device's location.
   ///
-  /// Requests permission to access the location of the device if denied, but
-  /// does nothing if denied again or if permanently denied.
-  ///
-  /// Should handle exception by showing a UI explaining
-  /// why the app needs location services.
+  /// When the location services are not enabled or permissions
+  /// are denied the `Future` will return an error Exception.
   Future<void> verifyPermissions() async {
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
