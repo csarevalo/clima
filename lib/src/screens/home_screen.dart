@@ -35,13 +35,17 @@ class HomeScreenContent extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           WeatherCard(
             openWeatherIconString: weatherData.openWeatherIcon, //'02n',
             temperature: weatherData.temperature, //71,
           ),
-          const WeatherMessageCard(),
+          WeatherMessageCard(
+            city: weatherData.city,
+            weatherDescription: weatherData.description,
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
     );
