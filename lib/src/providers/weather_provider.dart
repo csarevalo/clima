@@ -6,13 +6,6 @@ import 'package:flutter/material.dart';
 
 const String _openWeatherUrl = 'https://api.openweathermap.org/data';
 const String _apiKey = 'f6a2b2f36fe1df4ac64e75e29ad0f49e';
-WeatherData _weatherDataError = WeatherData(
-  error: true,
-  city: '',
-  description: 'Access to location services denied.',
-  temperature: 0,
-  openWeatherIcon: '11d',
-);
 
 class WeatherProvider extends ChangeNotifier {
   final Location _location = Location();
@@ -39,13 +32,15 @@ class WeatherProvider extends ChangeNotifier {
 
     position = null; //FIXME: remove
     if (position == null) {
-      _weatherData = _weatherDataError;
+      _weatherData = weatherDataError(
+        'Unable to access location services denied.',
+      );
       return;
     }
 
     double lat = position.latitude;
     double long = position.longitude;
-    debugPrint('lat: $lat, long: $long');
+    // debugPrint('lat: $lat, long: $long');
 
     NetworkHelper networkHelper = NetworkHelper(
       // '$_openWeatherUrl/3.0/onecall?lat=$lat&lon=$long&exclude=hourly,daily&appid=$_apiKey',
@@ -53,6 +48,13 @@ class WeatherProvider extends ChangeNotifier {
     );
 
     var openWeatherData = await networkHelper.getWeatherData();
+
+    if (openWeatherData == null) {
+      _weatherData = weatherDataError(
+        'Unable to access Open Weather Services.',
+      );
+      return;
+    }
 
     _weatherData = WeatherData(
       city: openWeatherData['name'],
@@ -62,6 +64,16 @@ class WeatherProvider extends ChangeNotifier {
     );
 
     return;
+  }
+
+  WeatherData weatherDataError(String errorMsg) {
+    return WeatherData(
+      error: true,
+      city: '',
+      description: errorMsg,
+      temperature: 0,
+      openWeatherIcon: '11d',
+    );
   }
 }
 

@@ -20,9 +20,7 @@ class WeatherMessageCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 100.0),
       child: Text(
         // 'Perfect day for a picnic 🧺',
-        error
-            ? 'Error: $weatherDescription'
-            : 'There is $weatherDescription in $city.',
+        error ? weatherDescription : 'There is $weatherDescription in $city.',
         textAlign: textAlign,
         style: const TextStyle(
           fontSize: 42,
