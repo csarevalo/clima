@@ -22,8 +22,9 @@ class LoadingScreen extends StatelessWidget {
           // ),
           SpinKitSpinningLines(
             size: 100,
-            lineWidth: 5.0,
+            lineWidth: 4.0,
             color: Colors.red,
+            duration: Duration(milliseconds: 2000),
           ),
         ],
       ),
