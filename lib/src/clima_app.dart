@@ -11,6 +11,7 @@ class ClimaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    precacheImage(backgroundImageAsset, context);
     final WeatherProvider weatherProvider = WeatherProvider();
     return ChangeNotifierProvider(
       create: (BuildContext context) => weatherProvider,
@@ -18,8 +19,8 @@ class ClimaApp extends StatelessWidget {
         theme: ThemeData.dark(useMaterial3: true),
         home: FutureBuilder(
           future: Future.wait([
-            weatherProvider.init(),
-            precacheImage(backgroundImageAsset, context)
+            precacheImage(backgroundImageAsset, context),
+            weatherProvider.init(), //Last, b/c requires location permission
           ]),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
