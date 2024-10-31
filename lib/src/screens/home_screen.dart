@@ -12,10 +12,16 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final weatherProvider =
+        Provider.of<WeatherProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () => weatherProvider.refreshData(),
+          icon: const Icon(Icons.my_location_rounded, size: 28),
+        ),
         title: const Text(
           'Clima Weather',
           style: TextStyle(fontSize: 36),
