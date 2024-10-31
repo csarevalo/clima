@@ -1,4 +1,5 @@
 import 'package:clima/src/providers/weather_provider.dart';
+import 'package:clima/src/screens/city_weather_screen.dart';
 import 'package:clima/src/widgets/weather_card.dart';
 import 'package:clima/src/widgets/weather_message_card.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,22 @@ class HomeScreen extends StatelessWidget {
           style: TextStyle(fontSize: 36),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return const CityWeatherScreen();
+                },
+              ));
+            },
+            icon: const Icon(
+              Icons.search,
+              size: 36,
+            ),
+          ),
+          const SizedBox(width: 8.0),
+        ],
       ),
       body: const HomeScreenContent(),
     );

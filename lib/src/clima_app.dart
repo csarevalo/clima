@@ -1,10 +1,9 @@
 import 'package:clima/src/providers/weather_provider.dart';
 import 'package:clima/src/screens/home_screen.dart';
 import 'package:clima/src/screens/loading_screen.dart';
+import 'package:clima/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-const backgroundImageAsset = AssetImage('assets/imgs/palm_trees_beach.jpg');
 
 class ClimaApp extends StatelessWidget {
   const ClimaApp({super.key});
@@ -16,6 +15,7 @@ class ClimaApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (BuildContext context) => weatherProvider,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(useMaterial3: true),
         home: FutureBuilder(
           future: Future.wait([
