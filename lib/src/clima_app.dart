@@ -20,6 +20,7 @@ class ClimaApp extends StatelessWidget {
         home: FutureBuilder(
           future: Future.wait([
             precacheImage(backgroundImageAsset, context),
+            precacheImage(cityBackgroundImageAsset, context),
             weatherProvider.init(), //Last, b/c requires location permission
           ]),
           builder: (context, snapshot) {

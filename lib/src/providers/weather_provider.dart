@@ -67,10 +67,14 @@ class WeatherProvider extends ChangeNotifier {
 
   Future<void> getCityWeather({
     required String city,
-    String countryCode = 'us',
+    String countryCode = '',
   }) async {
+    // String url = '$_openWeatherUrl?q=$city,$countryCode&units=$_units&APPID=$_apiKey';
+    // debugPrint(url);
+    String country = countryCode.isEmpty ? '' : ',$countryCode';
     NetworkHelper networkHelper = NetworkHelper(
-      '$_openWeatherUrl?q=$city,$countryCode&units=$_units&APPID=$_apiKey',
+      // 'https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=f6a2b2f36fe1df4ac64e75e29ad0f49e'
+      '$_openWeatherUrl?q=$city$country&units=$_units&APPID=$_apiKey',
     );
 
     var openWeatherData = await networkHelper.getWeatherData();
