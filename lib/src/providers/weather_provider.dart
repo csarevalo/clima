@@ -4,7 +4,9 @@ import 'package:clima/src/services/networking.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 
-const String _openWeatherUrl = 'https://api.openweathermap.org/data';
+// '/3.0/onecall' or '/2.5/weather'
+const String _openWeatherUrl =
+    'https://api.openweathermap.org/data/2.5/weather';
 const String _apiKey = 'f6a2b2f36fe1df4ac64e75e29ad0f49e';
 
 class WeatherProvider extends ChangeNotifier {
@@ -18,60 +20,84 @@ class WeatherProvider extends ChangeNotifier {
 
   /// Must initialize provider to get weather data
   Future<void> init() async {
-    await getWeatherData();
+    await getLocationWeather();
   }
 
   /// Use to refresh weather
   Future<void> refreshData() async {
-    await getWeatherData();
+    await getLocationWeather();
   }
 
-  /// Get weather data
-  Future<void> getWeatherData() async {
+  /// Get weather data from the user's location.
+  /// App must be granted access to location services to function.
+  Future<void> getLocationWeather() async {
     Position? position = await _location.getPosition();
 
     if (position == null) {
       _weatherData = weatherDataError(
-        'Unable to access location services denied.',
+        'Unable to access location services.',
       );
-      return;
+    } else {
+      double lat = position.latitude;
+      double long = position.longitude;
+      // debugPrint('lat: $lat, long: $long');
+
+      NetworkHelper networkHelper = NetworkHelper(
+        // '$_openWeatherUrl?lat=$lat&lon=$long&units=$_units&exclude=hourly,daily&appid=$_apiKey',
+        '$_openWeatherUrl?lat=$lat&lon=$long&units=$_units&APPID=$_apiKey',
+      );
+
+      var openWeatherData = await networkHelper.getWeatherData();
+
+      if (openWeatherData == null) {
+        _weatherData = weatherDataError(
+          'Unable to access Open Weather services, or invalid city name.',
+        );
+      } else {
+        _weatherData = WeatherData(
+          city: openWeatherData['name'],
+          description: openWeatherData['weather'][0]['description'],
+          temperature: openWeatherData?['main']['temp'],
+          openWeatherIcon: openWeatherData?['weather'][0]['icon'],
+        );
+      }
     }
+    notifyListeners();
+  }
 
-    double lat = position.latitude;
-    double long = position.longitude;
-    // debugPrint('lat: $lat, long: $long');
-
+  Future<void> getCityWeather({
+    required String city,
+    String countryCode = 'us',
+  }) async {
     NetworkHelper networkHelper = NetworkHelper(
-      // '$_openWeatherUrl/3.0/onecall?lat=$lat&lon=$long&exclude=hourly,daily&appid=$_apiKey',
-      '$_openWeatherUrl/2.5/weather?lat=$lat&lon=$long&units=$_units&APPID=$_apiKey',
+      '$_openWeatherUrl?q=$city,$countryCode&units=$_units&APPID=$_apiKey',
     );
 
     var openWeatherData = await networkHelper.getWeatherData();
 
     if (openWeatherData == null) {
       _weatherData = weatherDataError(
-        'Unable to access Open Weather Services.',
+        'Unable to access Open Weather services.',
       );
-      return;
+    } else {
+      _weatherData = WeatherData(
+        city: openWeatherData['name'],
+        description: openWeatherData['weather'][0]['description'],
+        temperature: openWeatherData?['main']['temp'],
+        openWeatherIcon: openWeatherData?['weather'][0]['icon'],
+      );
     }
-
-    _weatherData = WeatherData(
-      city: openWeatherData['name'],
-      description: openWeatherData['weather'][0]['description'],
-      temperature: openWeatherData?['main']['temp'],
-      openWeatherIcon: openWeatherData?['weather'][0]['icon'],
-    );
-
-    return;
+    notifyListeners();
   }
 
+  /// Used to deliver error messages in the form of [WeatherData].
   WeatherData weatherDataError(String errorMsg) {
     return WeatherData(
       error: true,
       city: '',
       description: errorMsg,
       temperature: 0,
-      openWeatherIcon: '11d',
+      openWeatherIcon: '11d', //stormy cloud
     );
   }
 }
