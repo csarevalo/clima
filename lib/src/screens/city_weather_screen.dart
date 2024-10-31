@@ -25,6 +25,14 @@ class _CityWeatherScreenState extends State<CityWeatherScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: const Text(
+            'Clima Weather',
+            style: TextStyle(fontSize: 36),
+          ),
+          centerTitle: true,
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

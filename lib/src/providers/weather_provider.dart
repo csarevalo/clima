@@ -81,7 +81,7 @@ class WeatherProvider extends ChangeNotifier {
 
     if (openWeatherData == null) {
       _weatherData = weatherDataError(
-        'Unable to access Open Weather services.',
+        'Verify you entered city name correctly.',
       );
     } else {
       _weatherData = WeatherData(
