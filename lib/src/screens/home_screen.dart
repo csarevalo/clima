@@ -69,6 +69,7 @@ class HomeScreenContent extends StatelessWidget {
           ),
           WeatherMessageCard(
             error: weatherData.error,
+            countryCode: weatherData.countryCode,
             city: weatherData.city,
             weatherDescription: weatherData.description,
             textAlign: TextAlign.center,

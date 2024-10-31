@@ -55,6 +55,7 @@ class WeatherProvider extends ChangeNotifier {
         );
       } else {
         _weatherData = WeatherData(
+          countryCode: openWeatherData['sys']['country'],
           city: openWeatherData['name'],
           description: openWeatherData['weather'][0]['description'],
           temperature: openWeatherData?['main']['temp'],
@@ -69,8 +70,6 @@ class WeatherProvider extends ChangeNotifier {
     required String city,
     String countryCode = '',
   }) async {
-    // String url = '$_openWeatherUrl?q=$city,$countryCode&units=$_units&APPID=$_apiKey';
-    // debugPrint(url);
     String country = countryCode.isEmpty ? '' : ',$countryCode';
     NetworkHelper networkHelper = NetworkHelper(
       // 'https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=f6a2b2f36fe1df4ac64e75e29ad0f49e'
@@ -85,6 +84,7 @@ class WeatherProvider extends ChangeNotifier {
       );
     } else {
       _weatherData = WeatherData(
+        countryCode: openWeatherData['sys']['country'],
         city: openWeatherData['name'],
         description: openWeatherData['weather'][0]['description'],
         temperature: openWeatherData?['main']['temp'],
@@ -98,6 +98,7 @@ class WeatherProvider extends ChangeNotifier {
   WeatherData weatherDataError(String errorMsg) {
     return WeatherData(
       error: true,
+      countryCode: '',
       city: '',
       description: errorMsg,
       temperature: 0,
@@ -109,13 +110,14 @@ class WeatherProvider extends ChangeNotifier {
 /// Contains only app essential weather data
 class WeatherData {
   WeatherData({
+    required this.countryCode,
     required this.city,
     required this.description,
     required this.temperature,
     required this.openWeatherIcon,
     this.error = false,
   });
-
+  final String countryCode;
   final String city;
   final String description;
   final double temperature;
