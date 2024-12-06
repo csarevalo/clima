@@ -2,7 +2,7 @@
 
 **Check out the weather near you, or look up other places are doing!**
 
-Give it a try. It's available on the web. Enjoy.
+Give it a try. It's available on the [web](https://csarevalo.github.io/clima/). Enjoy.
 
 Built with flutter and OpenWeather Api.
 
